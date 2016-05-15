@@ -4,24 +4,21 @@ class SteamRest {
   var $args = array();
   var $method;
   var $apiUrl;
-
-  public function __construct($argList, $methodUrl)
-  {
-    $this->apiUrl = "http://api.steampowered.com/";
-    $this->args = $argList;
-    $this->method = $methodUrl;
-  }
+  var $apiKey;
 
   public function formatUrl()
   {
-    $requestUrl = $this->apiUrl.$this->method."/?";
+    $requestUrl = $this->apiUrl.$this->method."/?key=".$this->apiKey;
 
     foreach($this->args as $argName=>$argValue)
     {
-      $requestUrl .= $argName."=".$argValue."&";
+      if(is_array($argValue))
+        $requestUrl .= "&".$argName."=".implode(",", $argValue);
+      else
+        $requestUrl .= "&".$argName."=".$argValue;
     }
 
-    return rtrim($requestUrl, "&");
+    return $requestUrl;
   }
 
   public function requestResponse()
@@ -41,6 +38,11 @@ class SteamRest {
     curl_close($curl);
 
     return json_decode($curlResponse);
+  }
+
+  public function serializeResponse()
+  {
+
   }
 }
 

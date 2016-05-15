@@ -4,54 +4,65 @@ Your Steam Web API Key
 Key: EF936026AC9D744FC68AF0C4F5F35129
 Domain Name: hlmodders.com
 */
+include("config.php");
+include("includes/DB.php");
+include("includes/User.php");
 
-include("includes/SteamRest.php");
+$targetSteamIds = array("76561198056988928", "76561197999131282", "76561198029991763");
+$userList = array();
 
+$steamIdString = "";
 
-$apikey = "EF936026AC9D744FC68AF0C4F5F35129";
-$steamid = "76561198056988928";
+foreach($targetSteamIds as $steamId)
+{
+  $steamIdString .= "\"".$steamId."\",";
+}
+
+$steamIdString = rtrim($steamIdString, ",");
+
+$userQuery = "SELECT * FROM users WHERE steamid IN (".$steamIdString.")";
+$selectResult = $mysqlConn->query($userQuery);
+
+if($selectResult->num_rows > 0)
+{
+  while($selectedUser = $selectResult->fetch_assoc())
+  {
+    $curUser = new User($selectedUser["steamid"], $selectedUser["username"], $selectedUser["url"], $selectedUser["avatar"], $selectedUser["avatar_medium"], $selectedUser["avatar_large"]);
+    array_push($userList, $curUser);
+
+    if(($key = array_search($selectedUser["steamid"], $targetSteamIds)) !== false) {
+      unset($targetSteamIds[$key]);
+    }
+  }
+  echo $selectResult->num_rows." of the requested IDs are already in the database<br /><br />";
+}
 
 /*
 ISteamUser/GetPlayerSummaries
 */
 
-$method = "ISteamUser/GetPlayerSummaries/v0002";
-
-$args = array(
-  "key" => "EF936026AC9D744FC68AF0C4F5F35129",
-  "steamids" => "76561198056988928"
-);
-
-$steamRestObj = new SteamRest($args, $method);
-
-echo $steamRestObj->formatUrl();
-
-var_dump($steamRestObj->requestResponse());
-
-
-/*
-$service_url = "http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=".$apikey."&steamid=".$steamid;
-$curl = curl_init($service_url);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-$curl_response = curl_exec($curl);
-
-if ($curl_response === false) {
-    $info = curl_getinfo($curl);
-    curl_close($curl);
-    die('error occured during curl exec. Additional info: ' . var_export($info));
-}
-
-curl_close($curl);
-
-$decoded = json_decode($curl_response);
-
-echo $decoded->{"playerstats"}->{"steamID"};
-
-foreach( $decoded->{"playerstats"}->{"stats"} as $stats=>$stat)
+if(count($targetSteamIds))
 {
-  echo $stat->{"name"};
-}
-*/
-//var_dump($decoded);
+  echo count($targetSteamIds)." of the requested IDs are new additions<br />";
 
+  /* Retrieve from the steam API the information for the new users */
+  $steamUserInfo = new SteamUserInfo($config["apiKey"]);
+  $steamUserInfo->args["steamids"] = $targetSteamIds;
+
+  $newUserList = $steamUserInfo->serializeResponse();
+
+  /* Insert the newly retrieved users into the database */
+  $insertQuery = "INSERT INTO users (steamid, username, url, avatar, avatar_medium, avatar_large) VALUES ";
+
+  foreach($newUserList as $newUser)
+    $insertQuery .= "('".$newUser->steamId."', '".$newUser->userName."', '".$newUser->url."', '".$newUser->avatar."', '".$newUser->avatarMedium."', '".$newUser->avatarLarge."'),";
+
+  $insertQuery = rtrim($insertQuery, ",");
+  $mysqlConn->query($insertQuery);
+
+  /* Merge the new users with the old users */
+  $userList = array_merge($userList, $newUserList);
+}
+
+var_dump($userList);
  ?>
