@@ -9,6 +9,8 @@ class User {
   var $avatarMedium;
   var $avatarLarge;
 
+  var $matchstats;
+
   public function __construct($steamId, $userName, $url, $avatar, $avatarMedium, $avatarLarge)
   {
     $this->steamId = $steamId;
