@@ -1,5 +1,4 @@
 <?php
-require_once("./config.php");
 
 // Create connection
 $mysqlConn = new mysqli($config["dbhost"], $config["dbuser"], $config["dbpass"]);

@@ -82,7 +82,7 @@ if(count($targetSteamIds))
 
 }
 //var_dump($userList);
-
+echo json_encode($userList);
 /* Begin HTML */
 ?>
 <style>

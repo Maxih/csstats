@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="./scripts/stats.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./styles/stats.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <span class="headerImage">
+          <img src="./images/header.png" />
+        </span>
+      </div>
+      <div ng-app="stats" ng-controller="StatController as stats">
+        <div class="userInput">
+          <span id="steamIdInput"><input type="text" ng-model="stats.newSteamId"></span>
+          <span id="addButton" ng-click="stats.getUsers()"></span>
+        </div>
+        <div class="userHead" ng-show="userStats.length">
+          <span class="avatarColumn"></span>
+          <span class="nameColumn"><p>Name</p></span>
+          <span class="killColumn"><p>Kills</p></span>
+          <span class="deathColumn"><p>Deaths</p></span>
+          <span class="kdColumn"><p>K/D</p></span>
+          <span class="winPerColumn"><p>Win %</p></span>
+          <span class="accuracyColumn"><p>Acc</p></span>
+          <span class="removeColumn"></span>
+        </div>
+        <div ng-repeat="stat in userStats" class="userInfo">
+          <span class="avatarColumn">
+            <p><img ng-src="{{stat.avatar}}"/></p>
+          </span>
+          <span class="nameColumn">
+            <p><a href="#">{{stat.userName}}</a></p>
+          </span>
+          <span class="killColumn">
+            <p>{{stat.matchstats.kills}}</p>
+          </span>
+          <span class="deathColumn">
+            <p>{{stat.matchstats.deaths}}</p>
+          </span>
+          <span class="kdColumn">
+            <p>{{(stat.matchstats.kills / stat.matchstats.deaths).toFixed(2)}}</p>
+          </span>
+          <span class="winPerColumn">
+            <p>{{stat.matchstats.matcheswon}} / {{stat.matchstats.matchesplayed}}<br />({{((stat.matchstats.matcheswon / stat.matchstats.matchesplayed) * 100).toFixed(2) }}%)</p>
+          </span>
+          <span class="accuracyColumn">
+            <p>{{((stat.matchstats.shotshit / stat.matchstats.shotstaken) * 100).toFixed(2) }}%</p>
+          </span>
+          <span ng-click="stats.removeUser(stat.steamId)" class="removeColumn"></span>
+        </div>
+        <div class="userFoot" ng-show="userStats.length">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

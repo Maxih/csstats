@@ -6,9 +6,15 @@ class MatchStats {
   var $plants;
   var $defuses;
   var $wins;
+  var $played;
   var $damage;
+  var $matcheswon;
+  var $matchesplayed;
+  var $mvps;
+  var $shotstaken;
+  var $shotshit;
 
-  public function __construct($kills, $deaths, $timeplayed, $plants, $defuses, $wins, $damage)
+  public function __construct($kills, $deaths, $timeplayed, $plants, $defuses, $wins, $played, $damage, $matcheswon, $matchesplayed, $mvps, $shotstaken, $shotshit)
   {
     $this->kills = $kills;
     $this->deaths = $deaths;
@@ -16,7 +22,13 @@ class MatchStats {
     $this->plants = $plants;
     $this->defuses = $defuses;
     $this->wins = $wins;
+    $this->played = $played;
     $this->damage = $damage;
+    $this->matcheswon = $matcheswon;
+    $this->matchesplayed = $matchesplayed;
+    $this->mvps = $mvps;
+    $this->shotstaken = $shotstaken;
+    $this->shotshit = $shotshit;
   }
 }
 
@@ -38,7 +50,7 @@ class SteamUserMatchStats extends SteamRest {
   {
     $response = $this->requestResponse();
 
-    $curStats = new MatchStats(NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+    $curStats = new MatchStats(NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
     foreach($response->{"playerstats"}->{"stats"} as $stat)
     {
@@ -62,8 +74,26 @@ class SteamUserMatchStats extends SteamRest {
         case "total_wins":
           $curStats->wins = $stat->{"value"};
           break;
+        case "total_rounds_played":
+          $curStats->played = $stat->{"value"};
+          break;
         case "total_damage_done":
           $curStats->damage = $stat->{"value"};
+          break;
+        case "total_matches_won":
+          $curStats->matcheswon = $stat->{"value"};
+          break;
+        case "total_matches_played":
+          $curStats->matchesplayed = $stat->{"value"};
+          break;
+        case "total_mvps":
+          $curStats->mvps = $stat->{"value"};
+          break;
+        case "total_shots_fired":
+          $curStats->shotstaken = $stat->{"value"};
+          break;
+        case "total_shots_hit":
+          $curStats->shotshit = $stat->{"value"};
           break;
       }
     }

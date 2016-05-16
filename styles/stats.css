@@ -1,0 +1,171 @@
+
+body {
+  background: #16253a;
+}
+
+.header {
+  margin-top: 100px;
+}
+
+a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+.wrapper {
+  width: 600px;
+  margin: 0 auto 0 auto;
+}
+
+
+
+div.userInfo {
+  font-size: 0;
+  color: #FFF;
+  font-family: 'Lato', sans-serif;
+  background: #272e38;
+  width: 100%;
+  padding: 0;
+  vertical-align: middle;
+  border-top: 1px solid #000;
+}
+
+div.userInfo span {
+  text-align: center;
+  font-size: 12px;
+  display: table-cell;
+  margin: 0;
+  vertical-align: middle;
+  height: 52px;
+}
+
+.avatarColumn img {
+  vertical-align: middle;
+  border: 1px solid #000;
+  border-radius: 3px;
+
+}
+
+div.userInfo p {
+  margin: 0;
+}
+
+div.userHead span {
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  top: 0;
+
+  font-size: 11px;
+}
+
+div.userHead {
+  font-size: 0;
+  background: #13181e;
+  color: #FFF;
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+div.userHead p {
+}
+
+div.userFoot {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: #13181e;
+  height: 10px;
+}
+
+.avatarColumn {
+  width: 54px;
+}
+
+.nameColumn {
+  width: 209px;
+  border-left: 1px solid #000;
+}
+
+.killColumn {
+  width: 60px;
+  border-left: 1px solid #000;
+}
+
+.deathColumn {
+  width: 60px;
+  border-left: 1px solid #000;
+}
+
+.kdColumn {
+  width: 40px;
+  border-left: 1px solid #000;
+}
+
+.removeColumn {
+  width: 10px;
+  border-left: 1px solid #000;
+  cursor: pointer;
+  background: #522e38;
+}
+
+.removeColumn:hover {
+  background: #9a1037;
+}
+
+.winPerColumn {
+  width: 100px;
+  border-left: 1px solid #000;
+}
+
+.accuracyColumn {
+  width: 60px;
+  border-left: 1px solid #000;
+}
+
+
+.userInput {
+  font-size: 0;
+
+}
+
+.userInput input {
+  margin: 0;
+  width: 550px;
+  height: 50px;
+  border: none;
+  background: transparent;
+  border-right: 1px solid #000;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: #FFF;
+  padding-left: 10px;
+  font-size: 30px;
+  color: #737a83;
+}
+
+#addButton {
+  margin: 0;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  line-height: .9;
+  background: #068506;
+  display: inline-block;
+  vertical-align: bottom;
+  text-align: center;
+  cursor: pointer;
+  background: url("../images/addbutton.png") center center;
+}
+
+#addButton:hover {
+
+}
+
+#steamIdInput {
+  display: inline-block;
+}

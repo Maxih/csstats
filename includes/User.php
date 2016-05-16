@@ -1,6 +1,4 @@
 <?php
-require_once("./includes/SteamRest.php");
-
 class User {
   var $steamId;
   var $userName;
@@ -8,10 +6,11 @@ class User {
   var $avatar;
   var $avatarMedium;
   var $avatarLarge;
+  var $state;
 
   var $matchstats;
 
-  public function __construct($steamId, $userName, $url, $avatar, $avatarMedium, $avatarLarge)
+  public function __construct($steamId, $userName, $url, $avatar, $avatarMedium, $avatarLarge, $state)
   {
     $this->steamId = $steamId;
     $this->userName = $userName;
@@ -19,6 +18,7 @@ class User {
     $this->avatar = $avatar;
     $this->avatarMedium = $avatarMedium;
     $this->avatarLarge = $avatarLarge;
+    $this->state = $state;
   }
 }
 
@@ -44,7 +44,7 @@ class SteamUserInfo extends SteamRest {
 
     foreach($response->{"response"}->{"players"} as $player)
     {
-      $curUser = new User($player->{"steamid"}, $player->{"personaname"}, $player->{"profileurl"}, $player->{"avatar"}, $player->{"avatarmedium"}, $player->{"avatarfull"});
+      $curUser = new User($player->{"steamid"}, $player->{"personaname"}, $player->{"profileurl"}, $player->{"avatar"}, $player->{"avatarmedium"}, $player->{"avatarfull"}, $player->{"personastate"});
       array_push($userList, $curUser);
     }
 
