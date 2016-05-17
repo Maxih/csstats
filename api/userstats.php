@@ -1,9 +1,9 @@
 <?php
 include("../config.php");
-include(ROOT_DIR."../includes/DB.php");
-include(ROOT_DIR."../includes/SteamRest.php");
-include(ROOT_DIR."../includes/User.php");
-include(ROOT_DIR."../includes/MatchStats.php");
+include(ROOT_DIR."/includes/DB.php");
+include(ROOT_DIR."/includes/SteamRest.php");
+include(ROOT_DIR."/includes/User.php");
+include(ROOT_DIR."/includes/MatchStats.php");
 
 //$targetSteamIds = array("76561198056988928", "76561197999131282", "76561198029991763");
 $targetSteamIds = array($_GET["steamid"]);

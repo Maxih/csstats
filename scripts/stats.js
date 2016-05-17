@@ -8,7 +8,7 @@ app.controller('StatController', function($scope, $http) {
   this.getUsers = function getUsers() {
     if(this.newSteamId != null)
     {
-      $http({method: 'GET', url: 'http://localhost/csstats/api/userstats.php?steamid='+this.newSteamId, headers: { }})
+      $http({method: 'GET', url: '/api/userstats.php?steamid='+this.newSteamId, headers: { }})
        .success(function(data, status) {
         var newUserStats = [];
         data.forEach(function(stat){
