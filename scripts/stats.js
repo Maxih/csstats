@@ -4,11 +4,12 @@ app.controller('StatController', function($scope, $http) {
   this.newSteamId = null;
 
   $scope.userStats = [];
+  $scope.recentUsers = [];
 
-  this.getUsers = function getUsers() {
+  this.getUsers = function getUsers(steamid) {
     if(this.newSteamId != null)
     {
-      $http({method: 'GET', url: '/api/userstats.php?steamid='+this.newSteamId, headers: { }})
+      $http({method: 'GET', url: '/services/userstats.php?steamid='+this.newSteamId, headers: { }})
        .success(function(data, status) {
         var newUserStats = [];
         data.forEach(function(stat){
@@ -28,6 +29,16 @@ app.controller('StatController', function($scope, $http) {
      }
    }
 
+   this.getRecentUsers = function getRecentUsers() {
+     $http({method: 'GET', url: '/services/recent.php', headers: { }})
+      .success(function(data, status) {
+        $scope.recentUsers = data;
+       })
+      .error(function(data, status) {
+          alert("Error");
+      });
+    }
+
    this.removeUser = function removeUser(steamId) {
      var newUserStats = [];
      $scope.userStats.forEach(function(stat){
@@ -40,4 +51,5 @@ app.controller('StatController', function($scope, $http) {
      $scope.userStats = newUserStats;
    }
 
+   this.getRecentUsers();
 });

@@ -15,43 +15,53 @@
       <div ng-app="stats" ng-controller="StatController as stats">
         <div class="userInput">
           <span id="steamIdInput"><input type="text" ng-model="stats.newSteamId"></span>
-          <span id="addButton" ng-click="stats.getUsers()"></span>
+          <span id="addButton" ng-click="stats.getUsers(stats.newSteamId); stats.newSteamId=null"></span>
         </div>
-        <div class="userHead" ng-show="userStats.length">
-          <span class="avatarColumn"></span>
-          <span class="nameColumn"><p>Name</p></span>
-          <span class="killColumn"><p>Kills</p></span>
-          <span class="deathColumn"><p>Deaths</p></span>
-          <span class="kdColumn"><p>K/D</p></span>
-          <span class="winPerColumn"><p>Win %</p></span>
-          <span class="accuracyColumn"><p>Acc</p></span>
-          <span class="removeColumn"></span>
+        <div class="recentUsersWrapper">
+          <div class="recentUserTitle">
+            Recently Viewed
+          </div>
+          <div ng-repeat="stat in recentUsers" class="recentUser">
+            <span ng-click="alert('hi')"><img ng-src="{{stat.avatar}}"/></span>
+          </div>
         </div>
-        <div ng-repeat="stat in userStats" class="userInfo">
-          <span class="avatarColumn">
-            <p><img ng-src="{{stat.avatar}}"/></p>
-          </span>
-          <span class="nameColumn">
-            <p><a href="#">{{stat.userName}}</a></p>
-          </span>
-          <span class="killColumn">
-            <p>{{stat.matchstats.kills}}</p>
-          </span>
-          <span class="deathColumn">
-            <p>{{stat.matchstats.deaths}}</p>
-          </span>
-          <span class="kdColumn">
-            <p>{{(stat.matchstats.kills / stat.matchstats.deaths).toFixed(2)}}</p>
-          </span>
-          <span class="winPerColumn">
-            <p>{{stat.matchstats.matcheswon}} / {{stat.matchstats.matchesplayed}}<br />({{((stat.matchstats.matcheswon / stat.matchstats.matchesplayed) * 100).toFixed(2) }}%)</p>
-          </span>
-          <span class="accuracyColumn">
-            <p>{{((stat.matchstats.shotshit / stat.matchstats.shotstaken) * 100).toFixed(2) }}%</p>
-          </span>
-          <span ng-click="stats.removeUser(stat.steamId)" class="removeColumn"></span>
-        </div>
-        <div class="userFoot" ng-show="userStats.length">
+        <div class="userStatsWrapper" ng-show="userStats.length">
+          <div class="userHead">
+            <span class="avatarColumn"></span>
+            <span class="nameColumn"><p>Name</p></span>
+            <span class="killColumn"><p>Kills</p></span>
+            <span class="deathColumn"><p>Deaths</p></span>
+            <span class="kdColumn"><p>K/D</p></span>
+            <span class="winPerColumn"><p>Win %</p></span>
+            <span class="accuracyColumn"><p>Acc</p></span>
+            <span class="removeColumn"></span>
+          </div>
+          <div ng-repeat="stat in userStats" class="userInfo">
+            <span class="avatarColumn">
+              <p><img ng-src="{{stat.avatar}}"/></p>
+            </span>
+            <span class="nameColumn">
+              <p><a href="#">{{stat.userName}}</a></p>
+            </span>
+            <span class="killColumn">
+              <p>{{stat.matchstats.kills}}</p>
+            </span>
+            <span class="deathColumn">
+              <p>{{stat.matchstats.deaths}}</p>
+            </span>
+            <span class="kdColumn">
+              <p>{{(stat.matchstats.kills / stat.matchstats.deaths).toFixed(2)}}</p>
+            </span>
+            <span class="winPerColumn">
+              <p>{{stat.matchstats.matcheswon}} / {{stat.matchstats.matchesplayed}}<br />({{((stat.matchstats.matcheswon / stat.matchstats.matchesplayed) * 100).toFixed(2) }}%)</p>
+            </span>
+            <span class="accuracyColumn">
+              <p>{{((stat.matchstats.shotshit / stat.matchstats.shotstaken) * 100).toFixed(2) }}%</p>
+            </span>
+            <span ng-click="stats.removeUser(stat.steamId)" class="removeColumn"></span>
+          </div>
+          <div class="userFoot">
+          </div>
         </div>
       </div>
     </div>

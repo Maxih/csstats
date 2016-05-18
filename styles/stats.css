@@ -169,3 +169,32 @@ div.userFoot {
 #steamIdInput {
   display: inline-block;
 }
+
+.recentUsersWrapper {
+  margin-top: 20px;
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  color: #FFF;
+  font-size: 0;
+}
+
+.recentUser {
+  display: inline-block;
+  padding: 0px 0px 0px 14px;
+}
+
+.recentUser img {
+  border: 1px solid #000;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.recentUserTitle{
+  background: #13181e;
+  border: 1px solid #000;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 9px 9px 10px 10px;
+  font-size: 11px;
+  vertical-align: middle;
+}
