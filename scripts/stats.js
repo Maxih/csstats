@@ -7,25 +7,25 @@ app.controller('StatController', function($scope, $http) {
   $scope.recentUsers = [];
 
   this.getUsers = function getUsers(steamid) {
-    if(this.newSteamId != null)
+    if(steamid != null)
     {
-      $http({method: 'GET', url: '/services/userstats.php?steamid='+this.newSteamId, headers: { }})
+      console.log(steamid);
+      $http({method: 'GET', url: '/services/userstats.php?steamid='+steamid, headers: { }})
        .success(function(data, status) {
-        var newUserStats = [];
         data.forEach(function(stat){
-          if($scope.userStats.indexOf(stat) == -1)
-          {
-            newUserStats.push(stat);
-          }
+          isNewUser = true;
+          $scope.userStats.forEach(function(oldstat){
+            if(stat.steamId==oldstat.steamId)
+              isNewUser=false;
+          });
+
+          if(isNewUser)
+            $scope.userStats.push(stat);
          });
-
-
-         $scope.userStats = $scope.userStats.concat(newUserStats);
         })
        .error(function(data, status) {
            alert("Error");
        });
-       this.newSteamId = null;
      }
    }
 
@@ -49,6 +49,10 @@ app.controller('StatController', function($scope, $http) {
      });
 
      $scope.userStats = newUserStats;
+   }
+
+   this.test = function test(string) {
+     console.log(string);
    }
 
    this.getRecentUsers();

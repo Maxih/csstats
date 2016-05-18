@@ -125,6 +125,12 @@ div.userFoot {
   border-left: 1px solid #000;
 }
 
+.privateColumn {
+  background: #602e38;
+  width: 324px;
+  border-left: 1px solid #000;
+}
+
 
 .userInput {
   font-size: 0;
@@ -180,8 +186,10 @@ div.userFoot {
 
 .recentUser {
   display: inline-block;
-  padding: 0px 0px 0px 14px;
+  margin: 0px 0px 0px 14px;
+  cursor: pointer;
 }
+
 
 .recentUser img {
   border: 1px solid #000;

@@ -15,14 +15,14 @@
       <div ng-app="stats" ng-controller="StatController as stats">
         <div class="userInput">
           <span id="steamIdInput"><input type="text" ng-model="stats.newSteamId"></span>
-          <span id="addButton" ng-click="stats.getUsers(stats.newSteamId); stats.newSteamId=null"></span>
+          <span id="addButton" ng-click="stats.getUsers(stats.newSteamId); stats.newSteamId=null; stats.test()"></span>
         </div>
         <div class="recentUsersWrapper">
           <div class="recentUserTitle">
             Recently Viewed
           </div>
           <div ng-repeat="stat in recentUsers" class="recentUser">
-            <span ng-click="alert('hi')"><img ng-src="{{stat.avatar}}"/></span>
+            <span ng-click="$parent.stats.getUsers(stat.steamId)"><img ng-src="{{stat.avatar}}"/></span>
           </div>
         </div>
         <div class="userStatsWrapper" ng-show="userStats.length">
@@ -41,21 +41,24 @@
               <p><img ng-src="{{stat.avatar}}"/></p>
             </span>
             <span class="nameColumn">
-              <p><a href="#">{{stat.userName}}</a></p>
+              <p><a href="{{stat.url}}">{{stat.userName}}</a></p>
             </span>
-            <span class="killColumn">
+            <span ng-if="stat.matchstats.kills == null" class="privateColumn">
+              <p>Private Profile</p>
+            </span>
+            <span ng-if="stat.matchstats.kills != null" class="killColumn">
               <p>{{stat.matchstats.kills}}</p>
             </span>
-            <span class="deathColumn">
+            <span ng-if="stat.matchstats.kills != null" class="deathColumn">
               <p>{{stat.matchstats.deaths}}</p>
             </span>
-            <span class="kdColumn">
+            <span ng-if="stat.matchstats.kills != null" class="kdColumn">
               <p>{{(stat.matchstats.kills / stat.matchstats.deaths).toFixed(2)}}</p>
             </span>
-            <span class="winPerColumn">
+            <span ng-if="stat.matchstats.kills != null" class="winPerColumn">
               <p>{{stat.matchstats.matcheswon}} / {{stat.matchstats.matchesplayed}}<br />({{((stat.matchstats.matcheswon / stat.matchstats.matchesplayed) * 100).toFixed(2) }}%)</p>
             </span>
-            <span class="accuracyColumn">
+            <span ng-if="stat.matchstats.kills != null" class="accuracyColumn">
               <p>{{((stat.matchstats.shotshit / stat.matchstats.shotstaken) * 100).toFixed(2) }}%</p>
             </span>
             <span ng-click="stats.removeUser(stat.steamId)" class="removeColumn"></span>
